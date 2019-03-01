@@ -22,20 +22,20 @@ const sessionCookie = {
 };
 
 module.exports = (server, context) => {
-  const { redisClient } = context;
+  const { storage } = context;
 
   server.use(
     session({
+      cookie: sessionCookie,
       name: sessionCookieName,
       resave: false,
       saveUninitialized: false,
       secret: SESSION_COOKIE_SECRET,
       store: new RedisStore({
-        client: redisClient,
+        client: storage.redis.client,
         logErrors: logger.error,
         prefix: 'carbonated.sid',
       }),
-      cookie: sessionCookie,
     })
   );
 

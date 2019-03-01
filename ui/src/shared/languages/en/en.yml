@@ -8,7 +8,13 @@ navigation.links.support: Support
 home.greeting: Home
 
 # Manage
-manage.greeting: Manage
+manage.users.title: Manage users
+manage.users.header.name: Name
+manage.users.header.email: Email
+manage.users.header.username: Username
+manage.users.header.created_at: Created at
+manage.users.header.updated_at: Updated at
+manage.users.actions.add: Add user
 
 # Support
 support.greeting: Support

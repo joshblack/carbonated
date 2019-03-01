@@ -6,11 +6,17 @@
 export function createErrorHandler(logger) {
   return (error, req, res, next) => {
     const status = error.status || 500;
-    res.status(status).json({
+    const details = {
       status,
       code: error.code || 500,
-      message: error.message || 'Internal server error',
-    });
+      message: 'Internal server error',
+    };
+
+    if (error.public && error.message) {
+      details.message = error.message;
+    }
+
+    res.status(status).json(details);
     logger.error(error);
   };
 }

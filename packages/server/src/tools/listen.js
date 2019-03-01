@@ -1,6 +1,7 @@
 import { HOST, PROTOCOL, PORT } from 'config';
 import { logger } from './logger';
 import { setupHTTPSServer } from './setupHTTPSServer';
+import { graceful } from './graceful';
 
 export function listen(server) {
   const service =
@@ -13,11 +14,12 @@ export function listen(server) {
       if (error) {
         return reject(error);
       }
-      process.on('SIGINT', () => {
-        handler.close();
-      });
-      resolve(handler);
-      logger.info(`Server listening at ${PROTOCOL}://${HOST}:${PORT}`);
+
+      if (PROTOCOL !== 'http') {
+        resolve(graceful(handler));
+      } else {
+        resolve(handler);
+      }
     });
   });
 }

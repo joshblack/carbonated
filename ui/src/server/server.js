@@ -12,11 +12,11 @@ const {
   setupHTML,
   setupLocale,
 } = require('@carbonated/server');
-const { REDIS_CONN_STR, REDIS_CERT_BASE64 } = require('config');
 const express = require('express');
 const path = require('path');
 const { supported } = require('../shared/languages');
 const { getMessages } = require('./tools/language');
+const { createPostgresClient } = require('./storage/postgres');
 const { createRedisClient } = require('./storage/redis');
 
 function getConfig() {
@@ -43,11 +43,11 @@ const middleware = [
 
   require('./middleware/session'),
   require('./middleware/oauth'),
+  require('./middleware/health-check'),
+  require('./middleware/graphql'),
 
   // Setup handling of different languages/locales
   setupLocale([...supported]),
-
-  require('./middleware/graphql'),
 
   // Handle serving static assets provided through ASSET_PATH
   assets,
@@ -77,18 +77,15 @@ const middleware = [
   error,
 ].filter(Boolean);
 
-module.exports = async () => {
+module.exports = async ({ repo, storage }) => {
   const ASSET_PATH = path.resolve(__dirname, '../../build');
-  const redisClient = await createRedisClient(
-    REDIS_CONN_STR,
-    REDIS_CERT_BASE64
-  );
   const context = {
     build: getBuildContext({
       assetPath: ASSET_PATH,
       getConfig,
     }),
-    redisClient,
+    repo,
+    storage,
   };
 
   return applyMiddleware(server, middleware, context);

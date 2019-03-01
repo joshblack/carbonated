@@ -7,7 +7,6 @@
 
 'use strict';
 
-const { GH_TOKEN } = require('config');
 const createAssigneeRepo = require('./assignee');
 const createCommentRepo = require('./comment');
 const createIssueRepo = require('./issue');
@@ -16,10 +15,10 @@ const createMilestoneRepo = require('./milestone');
 const createPullRequestRepo = require('./pull-request');
 
 const GITHUB_API_ENDPOINT = 'https://api.github.com';
-const DEFAULT_USER_AGENT = 'carbonated';
 const DEFAULT_TIMEOUT = 1000 * 30;
+const DEFAULT_USER_AGENT = 'carbonated';
 
-function createClient(token) {
+function createGitHubRepo(token) {
   const baseRequestOptions = {
     baseUrl: GITHUB_API_ENDPOINT,
     headers: {
@@ -41,4 +40,6 @@ function createClient(token) {
   };
 }
 
-module.exports = createClient(GH_TOKEN);
+module.exports = {
+  createGitHubRepo,
+};

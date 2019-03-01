@@ -6,8 +6,8 @@
 //
 
 $feature-flags: (
-  components-x: true,
-  ui-shell: true,
+  // components-x: true,
+    ui-shell: true
 );
 
 //-------------------------
@@ -42,10 +42,10 @@ $css--plex: true !default;
 // 🍕 Components
 //-------------------------
 
-// @import '~carbon-components/scss/components/button/button';
+@import '~carbon-components/scss/components/button/button';
 // @import '~carbon-components/scss/components/copy-button/copy-button';
 // @import '~carbon-components/scss/components/file-uploader/file-uploader';
-// @import '~carbon-components/scss/components/checkbox/checkbox';
+@import '~carbon-components/scss/components/checkbox/checkbox';
 // @import '~carbon-components/scss/components/combo-box/combo-box';
 // @import '~carbon-components/scss/components/radio-button/radio-button';
 // @import '~carbon-components/scss/components/toggle/toggle';
@@ -59,7 +59,7 @@ $css--plex: true !default;
 // @import '~carbon-components/scss/components/list-box/list-box';
 // @import '~carbon-components/scss/components/list/list';
 // @import '~carbon-components/scss/components/data-table/data-table';
-// @import '~carbon-components/scss/components/data-table-v2/data-table-v2';
+@import '~carbon-components/scss/components/data-table-v2/data-table-v2';
 // @import '~carbon-components/scss/components/structured-list/structured-list';
 // @import '~carbon-components/scss/components/code-snippet/code-snippet';
 // @import '~carbon-components/scss/components/overflow-menu/overflow-menu';
@@ -67,7 +67,7 @@ $css--plex: true !default;
 // @import '~carbon-components/scss/components/date-picker/date-picker';
 // @import '~carbon-components/scss/components/dropdown/dropdown';
 @import '~carbon-components/scss/components/loading/loading';
-// @import '~carbon-components/scss/components/modal/modal';
+@import '~carbon-components/scss/components/modal/modal';
 // @import '~carbon-components/scss/components/multi-select/multi-select';
 // @import '~carbon-components/scss/components/notification/inline-notification';
 // @import '~carbon-components/scss/components/notification/toast-notification';

@@ -19,7 +19,7 @@ function App() {
   return (
     <>
       <Navigation />
-      <React.Suspense fallback={<Loading />}>
+      <React.Suspense fallback={<Loading withOverlay={false} />}>
         <Router>
           <Home path="/" />
           <Manage path="/manage" />

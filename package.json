@@ -90,7 +90,8 @@
       "/es/",
       "/lib/",
       "/umd/",
-      "<rootDir>/packages/babel/test"
+      "<rootDir>/packages/babel/test",
+      "<rootDir>/ui/config/test"
     ],
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"

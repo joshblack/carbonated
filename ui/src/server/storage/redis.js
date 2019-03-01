@@ -8,9 +8,9 @@
 'use strict';
 
 const { logger } = require('@carbonated/server');
-const safe = require('../tools/safe');
-
 const redis = require('redis');
+const { createBackoff } = require('../tools/delay');
+const safe = require('../tools/safe');
 
 function createRedisClient(connectionString, certBase64) {
   const url = new URL(connectionString);
@@ -29,7 +29,14 @@ function createRedisClient(connectionString, certBase64) {
   );
 
   return new Promise((resolve, reject) => {
-    client.on('ready', () => resolve(client));
+    client.on('ready', () =>
+      resolve({
+        client,
+        close() {
+          return client.quit();
+        },
+      })
+    );
     client.on('error', error => {
       if (error.message.includes('Redis connection to')) {
         client.quit();
@@ -43,14 +50,16 @@ function createRedisClient(connectionString, certBase64) {
 async function createRedisClientWithRetries(
   connectionString,
   certBase64,
-  numRetries = 3
+  numRetries = 5
 ) {
+  const backoff = createBackoff();
   let client;
   let error;
 
   for (let i = 0; i < numRetries; i++) {
     if (i !== 0) {
-      logger.info(`retrying redis connection, attempt #${i + 1}`);
+      await backoff();
+      logger.info(`retrying redis connection, attempt #${i}`);
     }
 
     [error, client] = await safe(

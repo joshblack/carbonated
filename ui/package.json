@@ -6,7 +6,7 @@
   "scripts": {
     "build": "yarn clean && node tasks/build.js",
     "clean": "rimraf build",
-    "develop": "cross-env NODE_ENV=development nodemon -w config -w src/shared -w src/server src/server/index.js",
+    "develop": "cross-env NODE_ENV=development nodemon -e 'js,json,yml' -w config -w src/shared -w src/server src/server/index.js",
     "start": "cross-env NODE_ENV=production node src/server/index.js"
   },
   "dependencies": {
@@ -33,6 +33,7 @@
     "js-yaml": "^3.12.1",
     "object-assign": "^4.1.1",
     "parse-link-header": "^1.0.1",
+    "pg": "^7.8.0",
     "promise": "^8.0.2",
     "prop-types": "^15.6.2",
     "react": "^16.8.0-alpha.1",
